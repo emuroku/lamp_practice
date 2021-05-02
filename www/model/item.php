@@ -3,7 +3,6 @@ require_once MODEL_PATH . 'functions.php';
 require_once MODEL_PATH . 'db.php';
 
 // DB利用
-
 function get_item($db, $item_id){
   $sql = "
     SELECT
@@ -47,6 +46,7 @@ function get_all_items($db){
   return get_items($db);
 }
 
+// PDOを取得して
 function get_open_items($db){
   return get_items($db, true);
 }
