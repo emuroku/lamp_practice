@@ -72,7 +72,7 @@ function get_login_user($db){
   return get_user($db, $login_user_id);
 }
 
-// 
+// 登録可能なユーザー情報かをチェックし、すべて問題なければ新規登録を行い、結果の配列を取得して返す。失敗した場合はfalseを返す
 function regist_user($db, $name, $password, $password_confirmation) {
   // 登録可能なユーザー情報でない場合
   if( is_valid_user($name, $password, $password_confirmation) === false){

@@ -44,12 +44,19 @@ function fetch_all_query($db, $sql, $params = array()){
   return false;
 }
 
+// SQLを実行する
 function execute_query($db, $sql, $params = array()){
   try{
+    // プリペアドステートメントを用意
     $statement = $db->prepare($sql);
+    // SQLを実行する
     return $statement->execute($params);
+  
+  // 処理中にエラーが発生した場合
   }catch(PDOException $e){
+    // SESSIONにエラーメッセージを設定する
     set_error('更新に失敗しました。');
   }
+  // falseを返す
   return false;
 }
