@@ -89,8 +89,11 @@ function regist_item_transaction($db, $name, $price, $stock, $status, $image, $f
   
 }
 
+// 商品情報を新規登録する
 function insert_item($db, $name, $price, $stock, $filename, $status){
+  // ステータスに設定されている値を代入する
   $status_value = PERMITTED_ITEM_STATUSES[$status];
+  // SQL文の作成： itemsテーブルに、商品名、価格、在庫数、画像、ステータスをINSERTする
   $sql = "
     INSERT INTO
       items(
@@ -102,7 +105,7 @@ function insert_item($db, $name, $price, $stock, $filename, $status){
       )
     VALUES('{$name}', {$price}, {$stock}, '{$filename}', {$status_value});
   ";
-
+  // SQLを実行し、結果を返す      
   return execute_query($db, $sql);
 }
 
@@ -182,7 +185,9 @@ function delete_item($db, $item_id){
 
 // 非DB
 
+// 商品が公開状態かどうかを判定して結果を返す
 function is_open($item){
+  // $itemデータのstatusカラムが公開（1）であればTrueを返す
   return $item['status'] === 1;
 }
 
@@ -207,45 +212,72 @@ function validate_item($name, $price, $stock, $filename, $status){
     && $is_valid_item_status;
 }
 
+// 入力された新規商品情報の商品名が正規なものかをチェックし、問題なければTRUEを返す
 function is_valid_item_name($name){
+  // 結果の初期化
   $is_valid = true;
+  // 商品名の文字数が指定の範囲内に収まっていない場合
   if(is_valid_length($name, ITEM_NAME_LENGTH_MIN, ITEM_NAME_LENGTH_MAX) === false){
+    // SESSIONにエラーメッセージを設定
     set_error('商品名は'. ITEM_NAME_LENGTH_MIN . '文字以上、' . ITEM_NAME_LENGTH_MAX . '文字以内にしてください。');
+    // 結果を更新
     $is_valid = false;
   }
+  // 結果を返す
   return $is_valid;
 }
 
+// 入力された新規商品情報の価格が正規なものかをチェックし、結果をbool値で返す
 function is_valid_item_price($price){
+  // 結果の初期化
   $is_valid = true;
+  // 価格が正規の値で入力されていない場合
   if(is_positive_integer($price) === false){
+    // SESSIONにエラーメッセージを設定
     set_error('価格は0以上の整数で入力してください。');
+    // 結果をfalseに更新
     $is_valid = false;
   }
+  // 結果を返す
   return $is_valid;
 }
 
+// 入力された新規商品情報の在庫数が正規なものかをチェックし、結果をbool値で返す
 function is_valid_item_stock($stock){
+  // 結果の初期化
   $is_valid = true;
+  // 在庫数が正規の値で入力されていない場合
   if(is_positive_integer($stock) === false){
+    // SESSIONにエラーメッセージを設定
     set_error('在庫数は0以上の整数で入力してください。');
+    // 結果をfalseに更新
     $is_valid = false;
   }
+  // 結果を返す
   return $is_valid;
 }
 
+// 入力された画像データが正規かをチェックし、結果をbool値で返す
 function is_valid_item_filename($filename){
+  // 結果の初期化
   $is_valid = true;
+  // ファイル名が空の場合、falseを返す
   if($filename === ''){
     $is_valid = false;
   }
+  // 結果を返す
   return $is_valid;
 }
 
+// 入力されたステータスの値が正規化をチェックし、結果をbool値で返す
 function is_valid_item_status($status){
+  // 結果の初期化
   $is_valid = true;
+  // ステータスの値がセットされていない場合
   if(isset(PERMITTED_ITEM_STATUSES[$status]) === false){
+    // 結果をfalseに更新
     $is_valid = false;
   }
+  // 結果を返す
   return $is_valid;
 }
