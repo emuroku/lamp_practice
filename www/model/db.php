@@ -16,14 +16,20 @@ function get_db_connect(){
   return $dbh;
 }
 
+// 指定のSQL文を実行し、実行結果を取得して返す。処理中にエラーが発生した場合はfalseを返す
 function fetch_query($db, $sql, $params = array()){
   try{
+    // statementに指定のSQL文をセット
     $statement = $db->prepare($sql);
+    // SQLを実行する
     $statement->execute($params);
+    // 実行結果を取得して返す
     return $statement->fetch();
   }catch(PDOException $e){
+    // try処理内でエラーが発生した場合は、エラーメッセージを設定する
     set_error('データ取得に失敗しました。');
   }
+  // エラーが発生した場合はfalseを返す
   return false;
 }
 
