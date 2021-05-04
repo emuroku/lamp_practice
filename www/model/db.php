@@ -49,7 +49,7 @@ function execute_query($db, $sql, $params = array()){
   try{
     // プリペアドステートメントを用意
     $statement = $db->prepare($sql);
-    // SQLを実行する
+    // SQLを実行して、結果をbool値で返す
     return $statement->execute($params);
   
   // 処理中にエラーが発生した場合

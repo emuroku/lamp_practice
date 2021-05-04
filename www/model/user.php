@@ -152,13 +152,13 @@ function is_valid_password($password, $password_confirmation){
 
 // 新規登録ユーザーのデータをusersテーブルにINSERTする
 function insert_user($db, $name, $password){
-  // SQLの作成：usersのname, passwordカラムにユーザー名とパスワードをINSERTする
+// SQLの作成：usersのname, passwordカラムにユーザー名とパスワードをINSERTする
   $sql = "
     INSERT INTO
       users(name, password)
     VALUES ('{$name}', '{$password}');
   ";
-　// SQLを実行して取得したデータを返す
+  // SQLを実行して取得したデータを返す
   return execute_query($db, $sql);
 }
 
