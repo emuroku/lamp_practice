@@ -45,12 +45,16 @@ function fetch_all_query($db, $sql, $params = array()){
 }
 
 // SQLを実行する
-function execute_query($db, $sql, $params = array()){
+function execute_query($db, $sql, $params){
   try{
     // プリペアドステートメントを用意
     $statement = $db->prepare($sql);
+    // SQL文のプレースホルダに値をバインド
+    foreach($params as $key => $value){
+      $statement -> bindValue($key, $value, PDO::PARAM_STR);
+    }
     // SQLを実行して、結果をbool値で返す
-    return $statement->execute($params);
+    return $statement->execute();
   
   // 処理中にエラーが発生した場合
   }catch(PDOException $e){

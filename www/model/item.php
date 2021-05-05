@@ -103,10 +103,19 @@ function insert_item($db, $name, $price, $stock, $filename, $status){
         image,
         status
       )
-    VALUES('{$name}', {$price}, {$stock}, '{$filename}', {$status_value});
+    VALUES( ?, ?, ?, ?, ? );
   ";
+
+  // SQLインジェクション対策のため、バインドする値を用意
+  $values = array(
+    '1' => $name,
+    '2' => $price,
+    '3' => $stock,
+    '4' => $filename,
+    '5' => $status_value,
+  );
   // SQLを実行し、結果を返す      
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, $values);
 }
 
 // 指定の商品IDの商品のステータスを更新する
@@ -116,13 +125,19 @@ function update_item_status($db, $item_id, $status){
     UPDATE
       items
     SET
-      status = {$status}
+      status = ?
     WHERE
-      item_id = {$item_id}
+      item_id = ?
     LIMIT 1
   ";
+
+  // SQLインジェクション対策のため、バインドする値を用意
+  $values = array(
+    '1' => $status,
+    '2' => $item_id
+  );
   // SQLを実行し、結果を返す
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, $values);
 }
 
 // 指定の商品IDの商品の在庫数を更新する
@@ -132,13 +147,19 @@ function update_item_stock($db, $item_id, $stock){
     UPDATE
       items
     SET
-      stock = {$stock}
+      stock = ?
     WHERE
-      item_id = {$item_id}
+      item_id = ?
     LIMIT 1
   ";
+
+  // SQLインジェクション対策のため、バインドする値を用意
+  $values = array(
+    '1' => $stock,
+    '2' => $item_id
+  );
   // SQLを実行し、結果を返す
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, $values);
 }
 
 // 指定のIDの商品情報を削除し、結果をbool値で返す
@@ -174,12 +195,16 @@ function delete_item($db, $item_id){
     DELETE FROM
       items
     WHERE
-      item_id = {$item_id}
+      item_id = ?
     LIMIT 1
   ";
+
+  $values = array(
+    '1' => $item_id
+  );
   
   // SQLを実行し、結果を返す
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, $values);
 }
 
 
