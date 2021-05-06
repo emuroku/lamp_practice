@@ -45,14 +45,14 @@ function fetch_all_query($db, $sql, $params = array()){
 }
 
 // SQLを実行する
-function execute_query($db, $sql, $params = array()){
+function execute_query($db, $sql, $params){
   try{
     // プリペアドステートメントを用意
     $statement = $db->prepare($sql);
-    // SQLを実行して、結果をbool値で返す
+    // パラメータを渡してSQLを実行し、結果をbool値で返す
     return $statement->execute($params);
   
-  // 処理中にエラーが発生した場合
+    // 処理中にエラーが発生した場合
   }catch(PDOException $e){
     // SESSIONにエラーメッセージを設定する
     set_error('更新に失敗しました。');

@@ -91,11 +91,14 @@ function insert_cart($db, $user_id, $item_id, $amount = 1){
         user_id,
         amount
       )
-    VALUES({$item_id}, {$user_id}, {$amount})
+    VALUES( ?, ?, ? )
   ";
+
+  // SQLインジェクション対策のため、executeの引数にセットする配列を準備
+  $values = [$item_id, $user_id, $amount];
   
   // SQLを実行し、結果を返す
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, $values);
 }
 
 // cartsテーブルの指定のcart_idの購入数を更新する
@@ -105,13 +108,15 @@ function update_cart_amount($db, $cart_id, $amount){
     UPDATE
       carts
     SET
-      amount = {$amount}
+      amount = ?
     WHERE
-      cart_id = {$cart_id}
+      cart_id = ?
     LIMIT 1
   ";
+  // SQLインジェクション対策のため、executeの引数にセットする配列を準備
+  $values = [$amount, $cart_id];
   // SQLを実行し、結果を返す
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, $values);
 }
 
 // cartsテーブルから指定のIDのレコードを削除する
@@ -121,12 +126,14 @@ function delete_cart($db, $cart_id){
     DELETE FROM
       carts
     WHERE
-      cart_id = {$cart_id}
+      cart_id = ?
     LIMIT 1
   ";
+  // SQLインジェクション対策のため、executeの引数にセットする配列を準備
+  $values = [$cart_id];
 
   // SQLを実行し、結果を返す
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, $values);
 }
 
 // カート情報から各商品が購入可能かをチェックし、購入できなければfalseを返す。購入可能商品の場合、在庫更新チェックをし、問題なければカート情報を削除する
@@ -161,11 +168,13 @@ function delete_user_carts($db, $user_id){
     DELETE FROM
       carts
     WHERE
-      user_id = {$user_id}
+      user_id = ?
   ";
+  // SQLインジェクション対策のため、executeの引数にセットする配列を準備
+  $values = [$user_id];
 
   // SQLを実行する
-  execute_query($db, $sql);
+  execute_query($db, $sql, $values);
 }
 
 // cartデータから合計金額を計算して返す
