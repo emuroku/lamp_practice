@@ -106,14 +106,8 @@ function insert_item($db, $name, $price, $stock, $filename, $status){
     VALUES( ?, ?, ?, ?, ? );
   ";
 
-  // SQLインジェクション対策のため、バインドする値を用意
-  $values = array(
-    '1' => $name,
-    '2' => $price,
-    '3' => $stock,
-    '4' => $filename,
-    '5' => $status_value,
-  );
+  // SQLインジェクション対策のため、executeの引数にセットする配列を準備
+  $values = [$name, $price, $stock, $filename, $status_value];
   // SQLを実行し、結果を返す      
   return execute_query($db, $sql, $values);
 }
@@ -131,11 +125,8 @@ function update_item_status($db, $item_id, $status){
     LIMIT 1
   ";
 
-  // SQLインジェクション対策のため、バインドする値を用意
-  $values = array(
-    '1' => $status,
-    '2' => $item_id
-  );
+  // SQLインジェクション対策のため、executeの引数にセットする配列を準備
+  $values = [$status, $item_id];
   // SQLを実行し、結果を返す
   return execute_query($db, $sql, $values);
 }
@@ -153,11 +144,9 @@ function update_item_stock($db, $item_id, $stock){
     LIMIT 1
   ";
 
-  // SQLインジェクション対策のため、バインドする値を用意
-  $values = array(
-    '1' => $stock,
-    '2' => $item_id
-  );
+  // SQLインジェクション対策のため、executeの引数にセットする配列を準備
+  $values = [$stock, $item_id];
+
   // SQLを実行し、結果を返す
   return execute_query($db, $sql, $values);
 }
@@ -199,9 +188,8 @@ function delete_item($db, $item_id){
     LIMIT 1
   ";
 
-  $values = array(
-    '1' => $item_id
-  );
+  // SQLインジェクション対策のため、executeの引数にセットする配列を準備
+  $values = [$item_id];
   
   // SQLを実行し、結果を返す
   return execute_query($db, $sql, $values);

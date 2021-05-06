@@ -158,11 +158,9 @@ function insert_user($db, $name, $password){
       users(name, password)
     VALUES ( ?, ? );
   ";
-  // SQLインジェクション対策のため、バインドする値を用意
-  $values = array(
-    '1' => $name,
-    '2' => $password
-  );
+  // SQLインジェクション対策のため、executeの引数にセットする配列を準備
+  $values = [$name, $password];
+
   // SQLを実行して取得したデータを返す
   return execute_query($db, $sql, $values);
 }

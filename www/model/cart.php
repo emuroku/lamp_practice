@@ -94,12 +94,8 @@ function insert_cart($db, $user_id, $item_id, $amount = 1){
     VALUES( ?, ?, ? )
   ";
 
-  // SQLインジェクション対策のため、バインドする値を用意
-  $values = array(
-    '1' => $item_id,
-    '2' => $user_id,
-    '3' => $amount
-  );
+  // SQLインジェクション対策のため、executeの引数にセットする配列を準備
+  $values = [$item_id, $user_id, $amount];
   
   // SQLを実行し、結果を返す
   return execute_query($db, $sql, $values);
@@ -117,11 +113,8 @@ function update_cart_amount($db, $cart_id, $amount){
       cart_id = ?
     LIMIT 1
   ";
-  // SQLインジェクション対策のため、バインドする値を用意
-  $values = array(
-    '1' => $amount,
-    '2' => $cart_id
-  );
+  // SQLインジェクション対策のため、executeの引数にセットする配列を準備
+  $values = [$amount, $cart_id];
   // SQLを実行し、結果を返す
   return execute_query($db, $sql, $values);
 }
@@ -136,10 +129,8 @@ function delete_cart($db, $cart_id){
       cart_id = ?
     LIMIT 1
   ";
-
-  $values = array(
-    '1' => $cart_id
-  );
+  // SQLインジェクション対策のため、executeの引数にセットする配列を準備
+  $values = [$cart_id];
 
   // SQLを実行し、結果を返す
   return execute_query($db, $sql, $values);
@@ -179,10 +170,8 @@ function delete_user_carts($db, $user_id){
     WHERE
       user_id = ?
   ";
-
-  $values = array(
-    '1' => $user_id
-  );
+  // SQLインジェクション対策のため、executeの引数にセットする配列を準備
+  $values = [$user_id];
 
   // SQLを実行する
   execute_query($db, $sql, $values);
