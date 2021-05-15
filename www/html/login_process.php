@@ -14,6 +14,17 @@ if(is_logined() === true){
   redirect_to(HOME_URL);
 }
 
+// トークンのチェック
+$token = get_post('token');
+// dd($token);
+
+// Sessionのトークンと一致しない場合はエラーメッセージを設定
+if(is_valid_csrf_token($token) === false){
+  set_error('不正なリクエストです');
+  // ログインページへリダイレクトする
+  redirect_to(LOGIN_URL);
+}
+
 // POSTされたユーザー名を取得
 $name = get_post('name');
 // POSTされたパスワードを取得

@@ -204,3 +204,27 @@ function is_valid_upload_image($image){
 function h($str){
   return htmlspecialchars($str, ENT_QUOTES, "UTF-8");
 }
+
+// トークンを生成し、セッションにセットして生成したトークンを返す
+function get_csrf_token(){
+  // ランダムの値を取得
+  $token = get_random_string(30);
+  // sessionにトークンをセット
+  set_session('csrf_token', $token);
+  return $token;
+}
+
+// トークンを受け取り、セッションにセットされているトークンと一致すればTRUEを返す
+function is_valid_csrf_token($token){
+  // $tokenが空っぽであればfalseを返す
+  if($token === ''){
+    return false;
+  }
+  // // 一致する場合はセッションに新たなトークンを設定
+  // if($token === get_session('csrf_token')){
+  //   get_csrf_token();
+  // }
+  
+  // sessionにセットされているトークンを取得し、一致するかどうかをbool値で返す
+  return $token === get_session('csrf_token');
+}

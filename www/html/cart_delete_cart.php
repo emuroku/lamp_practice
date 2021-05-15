@@ -24,6 +24,16 @@ $db = get_db_connect();
 // ログイン済みユーザー情報を取得する
 $user = get_login_user($db);
 
+// トークンのチェック
+$token = get_post('token');
+
+// Sessionのトークンと一致しない場合はエラーメッセージを設定
+if(is_valid_csrf_token($token) === false){
+  set_error('不正なリクエストです');
+  // カートページへリダイレクト
+  redirect_to(CART_URL);
+}
+
 // POSTされたカートIDを取得する
 $cart_id = get_post('cart_id');
 

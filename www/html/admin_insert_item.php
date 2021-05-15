@@ -27,6 +27,15 @@ if(is_admin($user) === false){
   redirect_to(LOGIN_URL);
 }
 
+// トークンのチェック
+$token = get_post('token');
+// Sessionのトークンと一致しない場合はエラーメッセージを設定
+if(is_valid_csrf_token($token) === false){
+  set_error('不正なリクエストです');
+  // adminページへリダイレクト
+  redirect_to(ADMIN_URL);
+}
+
 // POSTされた商品名を取得
 $name = get_post('name');
 // POSTされた価格を取得
