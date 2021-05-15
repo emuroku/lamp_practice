@@ -27,6 +27,13 @@ if(is_admin($user) === false){
   redirect_to(LOGIN_URL);
 }
 
+// トークンのチェック
+$token = get_post('token');
+// Sessionのトークンと一致しない場合はエラーメッセージを設定
+if(is_valid_csrf_token($token) === false){
+  set_error('不正なリクエストです');
+}
+
 // POSTされた商品IDを取得
 $item_id = get_post('item_id');
 // POSTされた在庫数を取得

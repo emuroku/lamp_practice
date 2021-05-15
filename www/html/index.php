@@ -1,4 +1,6 @@
 <?php
+header('X-Frame-Options:DENY');
+
 // 定数ファイルを読み込み
 require_once '../conf/const.php';
 
@@ -13,6 +15,11 @@ require_once MODEL_PATH . 'item.php';
 
 // ログインチェックを行うため、セッションを開始
 session_start();
+
+// CSRF対策：トークンを生成してセッションに保存
+$token = get_csrf_token();
+// dd($token);
+// dd($_SESSION);
 
 // ログインチェック用関数を利用
 if(is_logined() === false){

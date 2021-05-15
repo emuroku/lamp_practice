@@ -13,6 +13,14 @@ require_once MODEL_PATH . 'cart.php';
 // ログインチェックのためセッション開始
 session_start();
 
+// トークンのチェック
+$token = get_post('token');
+
+// Sessionのトークンと一致しない場合はエラーメッセージを設定
+if(is_valid_csrf_token($token) === false){
+  set_error('不正なリクエストです');
+}
+
 // ログイン済みでない場合、ログインページへリダイレクト
 if(is_logined() === false){
   redirect_to(LOGIN_URL);
