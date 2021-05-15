@@ -21,6 +21,8 @@ $token = get_post('token');
 // Sessionのトークンと一致しない場合はエラーメッセージを設定
 if(is_valid_csrf_token($token) === false){
   set_error('不正なリクエストです');
+  // ログインページへリダイレクトする
+  redirect_to(LOGIN_URL);
 }
 
 // POSTされたユーザー名を取得

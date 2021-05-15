@@ -32,6 +32,8 @@ $token = get_post('token');
 // Sessionのトークンと一致しない場合はエラーメッセージを設定
 if(is_valid_csrf_token($token) === false){
   set_error('不正なリクエストです');
+  // adminページへリダイレクト
+  redirect_to(ADMIN_URL);
 }
 
 // POSTされたitem_idを取得
