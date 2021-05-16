@@ -53,7 +53,7 @@ function login_as($db, $name, $password){
   // ユーザー名からユーザーデータを取得
   $user = get_user_by_name($db, $name);
   // ユーザーデータ取得に失敗した場合、もしくは取得してきたユーザーのパスワードが入力値と一致しない場合
-  if($user === false || $user['password'] !== $password){
+  if($user === false || password_verify($password, $user['password']) === false){
     // falseを返す
     return false;
   }
@@ -158,10 +158,20 @@ function insert_user($db, $name, $password){
       users(name, password)
     VALUES ( ?, ? );
   ";
+
+  // パスワードをハッシュ化する
+  $hash = hashing_password($password);
+
   // SQLインジェクション対策のため、executeの引数にセットする配列を準備
-  $values = [$name, $password];
+  $values = [$name, $hash];
 
   // SQLを実行して取得したデータを返す
   return execute_query($db, $sql, $values);
+}
+
+// パスワードをハッシュ化して返す
+function hashing_password($password){
+  $hash = password_hash($password, PASSWORD_DEFAULT);
+  return $hash;
 }
 
