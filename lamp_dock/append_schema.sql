@@ -13,4 +13,12 @@ CREATE TABLE order_details (
   amount INT DEFAULT 0
 );
 
+-- 購入時商品価格テーブル
+CREATE TABLE prices (
+  item_id INT,
+  name VARCHAR(100) COLLATE utf8_general_ci,
+  purchase_price INT,
+  primary key(item_id)
+);
+
 -- ※ユーザー情報はusersのuser_id, 商品情報はitemsのitem_idと結合して取得
