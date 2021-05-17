@@ -5,6 +5,8 @@ require_once MODEL_PATH . 'functions.php';
 // DB接続に関する関数ファイルを読み込み
 require_once MODEL_PATH . 'db.php';
 
+
+
 // itemsテーブルから、指定のidの商品情報
 // 商品id、商品名、在庫数、価格、画像、ステータス を取得し、結果を配列で返す
 function get_item($db, $item_id){

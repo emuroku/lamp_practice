@@ -25,6 +25,7 @@ function fetch_query($db, $sql, $params = array()){
     $statement->execute($params);
     // 実行結果を取得して返す
     return $statement->fetch();
+
   }catch(PDOException $e){
     // try処理内でエラーが発生した場合は、エラーメッセージを設定する
     set_error('データ取得に失敗しました。');
@@ -51,7 +52,6 @@ function execute_query($db, $sql, $params){
     $statement = $db->prepare($sql);
     // パラメータを渡してSQLを実行し、結果をbool値で返す
     return $statement->execute($params);
-  
     // 処理中にエラーが発生した場合
   }catch(PDOException $e){
     // SESSIONにエラーメッセージを設定する
