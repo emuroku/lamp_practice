@@ -42,6 +42,7 @@ $item_id = get_post('item_id');
 $changes_to = get_post('changes_to');
 
 // changes_toパラメータがopenの場合
+
 if($changes_to === 'open'){
   // itemsテーブルの指定idのレコードのstatusを公開に設定する
   update_item_status($db, $item_id, ITEM_STATUS_OPEN);
