@@ -46,7 +46,7 @@ function insert_order_details($db, $order_id, $carts)
     $values = [$order_id, $cart['item_id'], $cart['name'], $cart['price'], $cart['amount']];
     // SQLを実行し、結果を返す
     if(execute_query($db, $sql, $values) === false){
-      throw new Exception;
+      return false;
     };
   }
 }
