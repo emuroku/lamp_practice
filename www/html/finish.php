@@ -51,10 +51,8 @@ try {
 
   // 商品が購入可能かをチェックし、falseの場合
   if (purchase_carts($db, $carts) === false) {
-    // SESSIONにエラーメッセージを設定
-    set_error('商品が購入できませんでした。');
-    // カートページへリダイレクト
-    redirect_to(CART_URL);
+    // 例外をスロー
+    throw new Exception();
   }
   // 合計金額を取得
   $total_price = sum_carts($carts);
@@ -63,10 +61,8 @@ try {
   // Sessionのuser_idを取得
   $user_id = get_session('user_id');
   if (insert_order($db, $user_id, $datetime) === false) {
-    // 商品情報の登録に失敗した場合、SESSIONにエラーメッセージを設定
-    set_error('商品の登録に失敗しました。');
-    // カートページへリダイレクト
-    redirect_to(CART_URL);
+    // 商品情報の登録に失敗した場合、例外をスロー
+    throw new Exception();
   } else {
     // order_detailsテーブルの更新
     // 直前にordersテーブルへinsertしたorder_idを取得
@@ -74,21 +70,19 @@ try {
 
     //$order_idからorder_detailsテーブルの更新
     if (insert_order_details($db, $order_id, $carts) === false) {
-      // 商品情報の登録に失敗した場合、SESSIONにエラーメッセージを設定
-      set_error('商品の登録に失敗しました。');
-      // カートページへリダイレクト
-      redirect_to(CART_URL);
+      // 商品情報の登録に失敗した場合、例外をスロー
+      throw new Exception();
     }
   }
   // コミット処理
   $db->commit();
   // 購入失敗時にエラーを設定する
-} catch (PDOException $e) {
+} catch (Exception $e) {
+
   set_error('購入処理中のエラーが発生しました。');
   // ロールバック処理
   $db->rollback();
-  // 例外をスロー
-  throw $e;
+  // カートページへリダイレクト
   redirect_to(CART_URL);
 }
 
