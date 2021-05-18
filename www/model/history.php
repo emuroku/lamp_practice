@@ -42,31 +42,11 @@ function insert_order_details($db, $order_id, $carts)
       )
     VALUES( ?, ?, ?, ?, ? )
   ";
-
-    // cart情報からitem_idの商品名と価格を取得
-    $cart_details = get_purchased_item($db, $cart['item_id']);
     // SQLインジェクション対策のため、executeの引数にセットする配列を準備
-    $values = [$order_id, $cart['item_id'], $cart_details['name'], $cart_details['price'], $cart['amount']];
+    $values = [$order_id, $cart['item_id'], $cart['name'], $cart['price'], $cart['amount']];
     // SQLを実行し、結果を返す
-    execute_query($db, $sql, $values);
+    if(execute_query($db, $sql, $values) === false){
+      throw new Exception;
+    };
   }
-}
-
-// itemsテーブルから、指定のidのhistoryテーブルに必要な商品情報を取得
-// 商品idから当時の商品名、価格を取得し、結果を配列で返す
-function get_purchased_item($db, $item_id)
-{
-  // SQL文の作成
-  $sql = "
-      SELECT
-        name,
-        price
-      FROM
-        items
-      WHERE
-        item_id = {$item_id}
-    ";
-
-  // SQLを実行し結果を返す
-  return fetch_query($db, $sql);
 }
