@@ -8,11 +8,10 @@
 </head>
 
 <body>
-    <?php var_dump($orders); ?>
+    <!-- <?php var_dump($orders); ?> -->
     <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
-    <h1>購入履歴</h1>
     <div class="container">
-
+    <h1>購入履歴</h1>
         <?php include VIEW_PATH . 'templates/messages.php'; ?>
 
         <?php if (count($orders) > 0) { ?>
@@ -33,7 +32,7 @@
                             <td><?php print(h($order['purchased'])); ?></td>
                             <td>
                                 <form method="post" action="history_get_detail.php">
-                                    <input type="submit" value="購入明細表示" class="btn btn-danger delete">
+                                    <input type="submit" value="購入明細表示" class="btn btn-info info">
                                     <input type="hidden" name="order_id" value="<?php print($order['order_id']); ?>">
                                     <!-- CSRF対策：トークンの送信 -->
                                     <input type="hidden" name="token" value="<?php print $token; ?>">

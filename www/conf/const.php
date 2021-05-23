@@ -35,6 +35,8 @@ define('FINISH_URL', '/finish.php');
 define('ADMIN_URL', '/admin.php');
 // 購入履歴ページのリンクを指定
 define('HISTORY_URL', '/history.php');
+// 購入明細ページのリンクを指定
+define('HISTORY_DETAIL_URL', '/history_detail.php');
 
 // 半角英数の組み合わせの正規表現を指定
 define('REGEXP_ALPHANUMERIC', '/\A[0-9a-zA-Z]+\z/');

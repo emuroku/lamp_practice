@@ -35,5 +35,5 @@ $user = get_login_user($db);
 // ordersテーブルから購入履歴を取得
 $orders = get_orders($db, $user);
 
-// indexのページのクライアントソースファイルを読み込む
+// 購入履歴ページのクライアントソースファイルを読み込む
 include_once VIEW_PATH . 'history_view.php';
