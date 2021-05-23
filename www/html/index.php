@@ -36,5 +36,10 @@ $user = get_login_user($db);
 // PDOを利用して公開されている商品データを取得
 $items = get_open_items($db);
 
+// ページャー実装：現在のページ数をgetで取得
+  // 公開済み商品の件数を取得
+  // 必要ページ数を算出
+  // 現在のページで取得する8つの商品を何番目から取得するかを決定
+
 // indexのページのクライアントソースファイルを読み込む
 include_once VIEW_PATH . 'index_view.php';
