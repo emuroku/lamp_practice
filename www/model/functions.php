@@ -33,17 +33,6 @@ function get_post($name){
   return '';
 }
 
-// $name のGETパラメータを取得する。値が入っていない場合は空の文字列を返す
-function get_getparam($name){
-  // $nameのPOSTパラメータが設定されている場合
-  if(isset($_GET[$name]) === true){
-    // POSTパラメータを返す
-    return $_GET[$name];
-  };
-  // POSTパラメータが設定されていない場合は、空の文字列を返す
-  return '';
-}
-
 // POSTメソッドによりアップロードされたファイルの内容を返す。値が入っていない場合は空の配列を返す
 function get_file($name){
   // _FILESに値がアップロードされている場合

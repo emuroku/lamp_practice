@@ -14,13 +14,7 @@
     <h1>商品一覧</h1>
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
     <!-- 表示中商品の番号を表示 -->
-    <!-- 最後のページの場合 -->
-    <?php if($current_page == $pages){ ?>
-    <p><?php print $assortment["COUNT(*)"]; ?>件中 <?php print ($current_page-1)*DISPLAYED_ITEMS+1; ?> - <?php print $assortment["COUNT(*)"]; ?>件目の商品</p> 
-    <?php }else{ ?>
-    <!-- 最後のページでない場合 -->
-    <p><?php print $assortment["COUNT(*)"]; ?>件中 <?php print ($current_page-1)*DISPLAYED_ITEMS+1; ?> - <?php print ($current_page)*DISPLAYED_ITEMS; ?>件目の商品</p>
-    <?php } ?>
+    <p><?php print $assortment["商品総数"]; ?>件中 <?php print ($current_page-1)*DISPLAYED_ITEMS+1; ?> - <?php print ($current_page-1)*DISPLAYED_ITEMS+count($items); ?>件目の商品</p>
     <div class="card-deck">
       <div class="row">
         <?php foreach ($items as $item) { ?>

@@ -302,11 +302,11 @@ function get_current_page(){
   // デフォルトで1ページ目を設定
   $page = 1;
   // GETパラメータがなにもない場合は、1ページ目を取得
-  if(get_getparam('page') === ''){
+  if(get_get('page') === ''){
     return $page;
   } 
   // 空でない場合はGETに入っている値を代入して返す
-  $page = get_getparam('page');
+  $page = get_get('page');
   return $page;
 }
 
@@ -315,7 +315,7 @@ function get_assortment($db){
   // SQL文の作成
   $sql = "
     SELECT
-     COUNT(*)
+     COUNT(*) AS 商品総数
     FROM
       items
     WHERE
