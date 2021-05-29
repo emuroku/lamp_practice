@@ -33,13 +33,18 @@ $db = get_db_connect();
 // PDOを利用してログインユーザーのデータを取得
 $user = get_login_user($db);
 
-// PDOを利用して公開されている商品データを取得
-$items = get_open_items($db);
+// // PDOを利用して公開されている商品データを取得
+// $items = get_open_items($db);
 
-// ページャー実装：現在のページ数をgetで取得
-  // 公開済み商品の件数を取得
+// ページャー実装
+  // 現在のページ数をgetで取得
+$current_page = get_current_page();
+  // 公開商品の総数を取得
+$assortment = get_assortment($db);
   // 必要ページ数を算出
-  // 現在のページで取得する8つの商品を何番目から取得するかを決定
+$pages = get_pages($db,$assortment["COUNT(*)"]);
+  // 現在のページ数で表示する商品の情報を取得
+$items = get_display_items($db, $current_page);  
 
 // indexのページのクライアントソースファイルを読み込む
 include_once VIEW_PATH . 'index_view.php';

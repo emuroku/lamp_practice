@@ -296,3 +296,68 @@ function is_valid_item_status($status){
   // 結果を返す
   return $is_valid;
 }
+
+// 現在のページ番号を取得する
+function get_current_page(){
+  // デフォルトで1ページ目を設定
+  $page = 1;
+  // GETパラメータがなにもない場合は、1ページ目を取得
+  if(get_getparam('page') === ''){
+    return $page;
+  } 
+  // 空でない場合はGETに入っている値を代入して返す
+  $page = get_getparam('page');
+  return $page;
+}
+
+// 公開中の商品の総数を取得する
+function get_assortment($db){
+  // SQL文の作成
+  $sql = "
+    SELECT
+     COUNT(*)
+    FROM
+      items
+    WHERE
+      status = 1;
+  ";
+  // SQLを実行し結果を返す
+  return fetch_query($db, $sql);
+}
+
+// 必要な商品一覧ページ数を計算する
+function get_pages($db, $assortment){
+  return ceil($assortment / DISPLAYED_ITEMS);
+}
+
+// ページ数から表示する商品の情報を取得する
+function get_display_items($db, $current_page){
+  // 何行目からデータを読むかを算出
+  $min = ($current_page-1)*DISPLAYED_ITEMS;
+  // 商品情報を取得して返す
+  return get_items_limited($db, $min);
+}
+
+// ページ番号に応じた指定数の商品情報を取得して返す
+function get_items_limited($db, $min){
+  // SQL文の作成：itemsテーブルから商品id、商品名、在庫数、価格、画像、ステータスを取得する
+  $sql = '
+    SELECT
+      item_id, 
+      name,
+      stock,
+      price,
+      image,
+      status
+    FROM
+      items
+    WHERE 
+      status = 1
+    LIMIT ?, ?; 
+    ';
+  // SQLインジェクション対策のため、executeの引数にセットする配列を準備
+  $values = [$min, DISPLAYED_ITEMS];
+  // fetchAllで取得結果のデータを配列で取得して返す
+  return fetch_all_query($db, $sql, $values);
+}
+
