@@ -80,3 +80,6 @@ define('PERMITTED_IMAGE_TYPES', array(
   IMAGETYPE_JPEG => 'jpg',
   IMAGETYPE_PNG => 'png',
 ));
+
+// indexページに表示する商品の数を設定
+define('DISPLAYED_ITEMS', 8);
