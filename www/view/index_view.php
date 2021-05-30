@@ -14,7 +14,7 @@
     <h1>商品一覧</h1>
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
     <!-- 表示中商品の番号を表示 -->
-    <p><?php print $assortment["商品総数"]; ?>件中 <?php print ($current_page-1)*DISPLAYED_ITEMS+1; ?> - <?php print ($current_page-1)*DISPLAYED_ITEMS+count($items); ?>件目の商品</p>
+    <p><?php print $assortment['assortment']; ?>件中 <?php print ($current_page - 1) * DISPLAYED_ITEMS + 1; ?> - <?php print ($current_page - 1) * DISPLAYED_ITEMS + count($items); ?>件目の商品</p>
     <div class="card-deck">
       <div class="row">
         <?php foreach ($items as $item) { ?>
@@ -49,25 +49,35 @@
     <div class="pager">
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-          <!-- <li class="page-item">
-            <a class="page-link" href="<?php print (HOME_URL) . '?page=' . $current_page - 1; ?>">Previous</a>
-          </li> -->
-          <?php for ($i = 1; $i <= $pages; $i++) {
-            if ($i == $current_page) { ?>
-              <!-- 現在のページ番号の場合 -->
-              <li class="page-item active">
-                <a class="page-link" href="<?php print (HOME_URL) . '?page=' . $i; ?>"><?php print $i; ?><span class="sr-only">(current)</span></a>
-              </li>
-            <?php } else { ?>
-              <!-- 現在のページ番号ではない場合 -->
+          <?php if ($current_page <= 1) { ?>
+            <li class="page-item disabled">
+              <a class="page-link">
+              <?php } else { ?>
+            <li class="page-item">
+              <a class="page-link" href="<?php print (HOME_URL) . '?page=' . ((int)$current_page - 1); ?>">
+                <?php } ?>前へ</a>
+            </li>
+            <?php for ($i = 1; $i <= $pages; $i++) {
+              if ($i == $current_page) { ?>
+                <!-- 現在のページ番号の場合 -->
+                <li class="page-item active">
+                  <a class="page-link" href="<?php print (HOME_URL) . '?page=' . $i; ?>"><?php print $i; ?><span class="sr-only">(current)</span></a>
+                </li>
+              <?php } else { ?>
+                <!-- 現在のページ番号ではない場合 -->
+                <li class="page-item">
+                  <a class="page-link" href="<?php print (HOME_URL) . '?page=' . $i; ?>"><?php print $i; ?></a>
+                </li>
+              <?php }
+            }
+            if ($current_page == $pages) { ?>
+              <li class="page-item disabled">
+                <a class="page-link">
+                <?php } else { ?>
               <li class="page-item">
-                <a class="page-link" href="<?php print (HOME_URL) . '?page=' . $i; ?>"><?php print $i; ?></a>
+                <a class="page-link" href="<?php print (HOME_URL) . '?page=' . ((int)$current_page + 1); ?>">
+                  <?php } ?>次へ</a>
               </li>
-          <?php }
-          } ?>
-          <!-- <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-          </li> -->
         </ul>
       </nav>
     </div>

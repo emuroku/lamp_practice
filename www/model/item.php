@@ -315,7 +315,7 @@ function get_assortment($db){
   // SQL文の作成
   $sql = "
     SELECT
-     COUNT(*) AS 商品総数
+     COUNT(*) AS assortment
     FROM
       items
     WHERE

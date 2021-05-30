@@ -42,7 +42,7 @@ $current_page = get_current_page();
   // 公開商品の総数を取得
 $assortment = get_assortment($db);
   // 必要ページ数を算出
-$pages = get_pages($db,$assortment["商品総数"]);
+$pages = get_pages($db,$assortment['assortment']);
   // 現在のページ数で表示する商品の情報を取得
 $items = get_display_items($db, $current_page);  
 
